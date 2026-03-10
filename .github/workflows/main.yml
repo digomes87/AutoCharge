@@ -55,9 +55,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create and Enable Auto-Merge for Pull Request
+      - name: Create Pull Request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create --base main --head develop --title "Merge develop into main" --body "Automated PR created after successful tests on develop branch." || echo "PR already exists"
-          gh pr merge develop --auto --merge || echo "Auto-merge could not be enabled (check repo settings)"
