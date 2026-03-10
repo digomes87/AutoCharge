@@ -32,7 +32,7 @@ jobs:
         run: pip install uv
 
       - name: Create virtual environment
-        run: uv venv .venv
+        run: uv venv .venv --clear
 
       - name: Install dependencies
         run: |
