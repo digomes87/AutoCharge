@@ -81,11 +81,39 @@ class DataProcessor:
         if self.df is None:
             return
 
+        mapping = {
+            "id_cliene": "client_id",
+            "nome": "name",
+            "empresa": "company",
+            "plano": "plan",
+            "valor": "value",
+            "dias_atraso": "days_overdue",
+            "ultimo_pagamento": "last_payment",
+            "telefone": "phone",
+        }
+
+        self.df.rename(
+            columns={k: v for k, v in mapping.items() if k in self.df.columns},
+            inplace=True,
+        )
+
     def _validate_columns(self) -> None:
-        pass
+        """checks if all required columns are present"""
+        if self.df is None:
+            return
+
+        missing_columns = [
+            col for col in self.REQUIRED_COLUMNS if col not in self.df.columns
+        ]
+
+        if missing_columns:
+            raise ValueError(f"Missing required columns: {missing_columns}")
+        logger.info("Column validation OK")
 
     def _clean_data(self) -> None:
-        pass
+        """Cleans and normalizes the data"""
+        if self.df is None:
+            pass
 
     def _classify_clients(self) -> None:
         pass
