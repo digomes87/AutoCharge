@@ -65,36 +65,36 @@ class AppConfig:
 
         return cls(
             company=CompanyConfig(
-                name=data["empresa"]["nome"],
-                support_email=data["empresa"]["email_suporte"],
-                phone=data["empresa"]["telefone"],
-                website=data["empresa"]["site"],
+                name=data["company"]["name"],
+                support_email=data["company"]["support_email"],
+                phone=data["company"]["phone"],
+                website=data["company"]["website"],
             ),
             email=EmailConfig(
                 smtp_host=data["email"]["smtp_host"],
                 smtp_port=data["email"]["smtp_port"],
-                use_tls=data["email"]["usar_tls"],
-                sender_email=data["email"]["email_remetente"],
-                sender_name=data["email"]["nome_remetente"],
-                rate_limit_seconds=data["email"]["rate_limit_segundos"],
-                max_retries=data["email"]["max_tentativas"],
+                use_tls=data["email"]["use_tls"],
+                sender_email=data["email"]["sender_email"],
+                sender_name=data["email"]["sender_name"],
+                rate_limit_seconds=data["email"]["rate_limit_seconds"],
+                max_retries=data["email"]["max_retries"],
             ),
             data=DataConfig(
-                clients_file=data["dados"]["arquivo_clientes"],
-                logs_dir=data["dados"]["diretorio_logs"],
-                reports_dir=data["dados"]["diretorio_relatorios"],
+                clients_file=data["data"]["clients_file"],
+                logs_dir=data["data"]["logs_dir"],
+                reports_dir=data["data"]["reports_dir"],
             ),
             categories={
                 k: CategoryConfig(
                     min_days=v["min"], max_days=v["max"], label=v["label"]
                 )
-                for k, v in data["categorias"].items()
+                for k, v in data["categories"].items()
             },
             schedule=ScheduleConfig(
-                execution_time=data["agendamento"]["horario_execucao"],
-                weekdays=data["agendamento"]["dias_semana"],
-                timezone=data["agendamento"]["timezone"],
+                execution_time=data["schedule"]["execution_time"],
+                weekdays=data["schedule"]["weekdays"],
+                timezone=data["schedule"]["timezone"],
             ),
-            test_mode=data.get("modo_teste", True),
-            test_email=data.get("email_teste", ""),
+            test_mode=data.get("test_mode", True),
+            test_email=data.get("test_email", ""),
         )
