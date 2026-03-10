@@ -209,3 +209,47 @@ class DataProcessor:
         logger.info(
             f"Statistics calculated | Total debt: R$ {self.statistics.total_debt:,.2f}"
         )
+
+    def get_clients_by_category(self, category: str) -> pd.DataFrame:
+        """Returns clients filtered by category"""
+        if self.df is None:
+            raise RuntimeError("Data not loaded. Execute load_data() first")
+
+        df = self.df
+        filtered_df = df.loc[df["category"] == category].copy()
+        return cast(pd.DataFrame, filtered_df)
+
+    def get_judicial_clients(self) -> pd.DataFrame:
+        """Exports only clients for legal referral"""
+        return self.get_clients_by_category("judicial")
+
+    def exports_csv_reports(self, output_path: str) -> None:
+        """Exports processed data to CSV"""
+        if self.df is None:
+            return
+
+        self.df.to_csv(output_path, index=False, encoding="utf-8-sig")
+        logger.info(f"CSV report exported: {output_path}")
+
+    def summary(self) -> str:
+        """Returns formatte summary of statistics"""
+        stats = self.statistics
+        lines = [
+            "=" * 50,
+            f" Total delinquent: {stats.total_clients}",
+            f" Total debt: R${stats.total_debt:,.2f}",
+            "",
+            " By category:",
+        ]
+
+        for cat, data in stats.by_category.items():
+            lines.append(
+                f" [{cat.upper():8}] {data['count']:3} clients | "
+                f"R$ {data['total_debt']:>10,.2f} | {data['label']}"
+            )
+
+        if stats.invalid_emails:
+            lines.append(f"\n Invalid emails: {stats.invalid_emails}")
+
+        lines.append("=" * 50)
+        return "\n".join(lines)
