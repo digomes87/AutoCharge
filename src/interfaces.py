@@ -1,6 +1,4 @@
-from typing import Any, Dict, List, Optional, Protocol
-
-import pandas as pd
+from typing import Protocol
 
 
 class DataProcessorProtocol(Protocol):
