@@ -1,0 +1,17 @@
+
+id_cliente,nome,email,empresa,plano,valor,dias_atraso,ultimo_pagamento,telefone
+001,Ana Silva,ana.silva@email.com,TechCorp Ltda,Premium,1500.00,3,2024-02-07,11999990001
+002,Bruno Costa,bruno.costa@empresa.com,StartUp XYZ,Básico,500.00,10,2024-01-31,11999990002
+003,Carla Mendes,carla@negocio.com.br,Mendes ME,Pro,900.00,22,2024-01-19,11999990003
+004,Diego Alves,diego.alves@corp.com,Corp SA,Premium,2000.00,45,2024-01-15,11999990004
+005,Elena Rocha,elena.rocha@startup.io,Startup IO,Básico,450.00,5,2024-02-05,11999990005
+006,Fernando Lima,fernando@lima.com.br,Lima & Assoc,Pro,1200.00,18,2024-01-23,11999990006
+007,Gabriela Santos,gabi.santos@email.com,GS Eventos,Premium,1800.00,12,2024-01-29,11999990007
+008,Henrique Moura,h.moura@moura.com,Moura Tecno,Básico,600.00,35,2024-01-05,11999990008
+009,Isabela Torres,isa.torres@corp.net,Torres Corp,Pro,950.00,7,2024-02-03,11999990009
+010,João Ferreira,joao.ferreira@jf.com.br,JF Soluções,Premium,2200.00,28,2024-01-13,11999990010
+011,Karen Oliveira,karen@oliveira.com,Oliveira ME,Básico,480.00,2,2024-02-08,11999990011
+012,Lucas Pereira,lucas.p@empresa.io,Pereira Tech,Pro,1100.00,15,2024-01-26,11999990012
+013,Mariana Souza,mariana.souza@ms.com,MS Consultoria,Premium,1650.00,50,2023-12-22,11999990013
+014,Nicolas Barbosa,nicolas@barb.com.br,Barbosa & CIA,Básico,520.00,9,2024-02-01,11999990014
+015,Olivia Castro,olivia.castro@oc.com,OC Digital,Pro,870.00,20,2024-01-21,11999990015

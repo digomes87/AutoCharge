@@ -1,0 +1,35 @@
+{
+  "empresa": {
+    "nome": "Company SA",
+    "email_suporte": "financeiro@company.com",
+    "telefone": "(11) 3000-0000",
+    "site": "www.company.com.br"
+  },
+  "email": {
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": 587,
+    "usar_tls": true,
+    "email_remetente": "financeiro@company.com",
+    "nome_remetente": "Financeiro - Company SA",
+    "rate_limit_segundos": 2,
+    "max_tentativas": 3
+  },
+  "dados": {
+    "arquivo_clientes": "data/clientes.csv",
+    "diretorio_logs": "logs",
+    "diretorio_relatorios": "reports"
+  },
+  "categorias": {
+    "leve": { "min": 1, "max": 7, "label": "Lembrete Amigável" },
+    "medio": { "min": 8, "max": 15, "label": "Aviso Profissional" },
+    "critico": { "min": 16, "max": 30, "label": "Aviso Urgente" },
+    "judicial": { "min": 31, "max": 9999, "label": "Encaminhamento Jurídico" }
+  },
+  "agendamento": {
+    "horario_execucao": "08:00",
+    "dias_semana": ["segunda", "terca", "quarta", "quinta", "sexta"],
+    "timezone": "America/Sao_Paulo"
+  },
+  "modo_teste": true,
+  "email_teste": "seu_email_de_teste@email.com"
+}
