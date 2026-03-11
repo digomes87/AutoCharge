@@ -86,6 +86,7 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .nox/
+.DS_Store
 .coverage
 .coverage.*
 .cache

@@ -48,8 +48,6 @@ class EmailTemplates:
         html_body = self._html_wrapper(
             category_color="#4CAF50",
             category_label="FRIENDLY REMINDER",
-            client=c,
-            value_fmt=value_fmt,
             body=f"""
             <p>Hello, <strong>{c["name"]}</strong>!</p>
             <p>We hope everything is well with you and <strong>{c["company"]}</strong>.</p>
@@ -94,8 +92,6 @@ Support: {self.company.support_email} | {self.company.phone}
         html_body = self._html_wrapper(
             category_color="#FF9800",
             category_label="SECOND NOTICE",
-            client=c,
-            value_fmt=value_fmt,
             body=f"""
             <p>Dear <strong>{c["name"]}</strong>,</p>
             <p>We are contacting you regarding the outstanding payment for <strong>{c["company"]}</strong>,
@@ -143,8 +139,6 @@ To negotiate: {self.company.support_email} | {self.company.phone}
         html_body = self._html_wrapper(
             category_color="#F44336",
             category_label="CRITICAL NOTICE",
-            client=c,
-            value_fmt=value_fmt,
             body=f"""
             <p>Dear <strong>{c["name"]}</strong>,</p>
             <p>This is an <strong>urgent</strong> communication regarding the delinquency of
@@ -200,8 +194,6 @@ URGENT Contact: {self.company.support_email} | {self.company.phone}
         html_body = self._html_wrapper(
             category_color="#9C27B0",
             category_label="LEGAL REFERRAL",
-            client=c,
-            value_fmt=value_fmt,
             body=f"""
             <p><strong>Report Date:</strong> {today_date}</p>
             <p>The client below has exceeded 30 days of delinquency and should be
@@ -223,12 +215,13 @@ URGENT Contact: {self.company.support_email} | {self.company.phone}
 
         text_body = f"""[LEGAL] Client for collection - {today_date}
 
-ID: {c["client_id"]} | {c["name"]} | {c["company"]}
-Phone: {c["phone"]} | Email: {c["email"]}
-Plan: {c["plan"]} | Value: {value_fmt}
-Delay: {c["days_overdue"]} days | Last Payment: {c["last_payment"]}
+                        ID: {c["client_id"]} | {c["name"]} | {c["company"]}
+                        Phone: {c["phone"]} | Email: {c["email"]}
+                        Plan: {c["plan"]} | Value: {value_fmt}
+                        Delay: {c["days_overdue"]} days | Last Payment: {c["last_payment"]}
 
-Forwarded by the Automated Billing System."""
+                        Forwarded by the Automated Billing System.
+                    """
 
         return EmailMessage(
             recipient=self.company.support_email,
@@ -248,61 +241,59 @@ Forwarded by the Automated Billing System."""
         self,
         category_color: str,
         category_label: str,
-        client: Dict[str, Any],
-        value_fmt: str,
         body: str,
     ) -> str:
         return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-  body {{ font-family: 'Segoe UI', Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }}
-  .container {{ max-width:600px; margin:0 auto; background:#fff;
-                border-radius:8px; overflow:hidden;
-                box-shadow:0 2px 10px rgba(0,0,0,.1); }}
-  .header {{ background:{category_color}; color:#fff; padding:20px 30px; }}
-  .header h1 {{ margin:0; font-size:20px; }}
-  .header p {{ margin:4px 0 0; opacity:.9; font-size:13px; }}
-  .badge {{ display:inline-block; background:rgba(255,255,255,.25);
-            padding:3px 10px; border-radius:12px; font-size:12px;
-            font-weight:bold; margin-bottom:8px; }}
-  .body {{ padding:30px; color:#333; line-height:1.6; }}
-  .body p {{ margin:0 0 14px; }}
-  .body ul {{ margin:0 0 14px 20px; }}
-  .body li {{ margin-bottom:6px; }}
-  .valor-box {{ width:100%; border-collapse:collapse;
-                border:2px solid {category_color};
-                border-radius:6px; margin:16px 0;
-                background:#fafafa; }}
-  .valor-box td {{ padding:10px 16px; font-size:14px; border-bottom:1px solid #eee; }}
-  .valor-box tr:last-child td {{ border-bottom:none; }}
-  .footer {{ background:#f9f9f9; border-top:1px solid #eee;
-             padding:16px 30px; font-size:12px; color:#888; text-align:center; }}
-  .footer a {{ color:{category_color}; text-decoration:none; }}
-</style>
-</head>
-<body>
-<div class="container">
-  <div class="header">
-    <div class="badge">{category_label}</div>
-    <h1>{self.company.name}</h1>
-    <p>Finance Department</p>
-  </div>
-  <div class="body">
-    {body}
-  </div>
-  <div class="footer">
-    <p>
-      {self.company.name} &nbsp;|&nbsp;
-      <a href="mailto:{self.company.support_email}">{self.company.support_email}</a> &nbsp;|&nbsp;
-      {self.company.phone}
-    </p>
-    <p><a href="http://{self.company.website}">{self.company.website}</a></p>
-    <p style="font-size:10px;color:#bbb;">
-      This is an automated email. To unsubscribe, please contact our support.
-    </p>
-  </div>
-</div>
-</body>
+            <html lang="en">
+            <head>
+            <meta charset="UTF-8">
+            <style>
+              body {{ font-family: 'Segoe UI', Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }}
+              .container {{ max-width:600px; margin:0 auto; background:#fff;
+                            border-radius:8px; overflow:hidden;
+                            box-shadow:0 2px 10px rgba(0,0,0,.1); }}
+              .header {{ background:{category_color}; color:#fff; padding:20px 30px; }}
+              .header h1 {{ margin:0; font-size:20px; }}
+              .header p {{ margin:4px 0 0; opacity:.9; font-size:13px; }}
+              .badge {{ display:inline-block; background:rgba(255,255,255,.25);
+                        padding:3px 10px; border-radius:12px; font-size:12px;
+                        font-weight:bold; margin-bottom:8px; }}
+              .body {{ padding:30px; color:#333; line-height:1.6; }}
+              .body p {{ margin:0 0 14px; }}
+              .body ul {{ margin:0 0 14px 20px; }}
+              .body li {{ margin-bottom:6px; }}
+              .valor-box {{ width:100%; border-collapse:collapse;
+                            border:2px solid {category_color};
+                            border-radius:6px; margin:16px 0;
+                            background:#fafafa; }}
+              .valor-box td {{ padding:10px 16px; font-size:14px; border-bottom:1px solid #eee; }}
+              .valor-box tr:last-child td {{ border-bottom:none; }}
+              .footer {{ background:#f9f9f9; border-top:1px solid #eee;
+                         padding:16px 30px; font-size:12px; color:#888; text-align:center; }}
+              .footer a {{ color:{category_color}; text-decoration:none; }}
+            </style>
+            </head>
+            <body>
+            <div class="container">
+              <div class="header">
+                <div class="badge">{category_label}</div>
+                <h1>{self.company.name}</h1>
+                <p>Finance Department</p>
+              </div>
+              <div class="body">
+                {body}
+              </div>
+              <div class="footer">
+                <p>
+                  {self.company.name} &nbsp;|&nbsp;
+                  <a href="mailto:{self.company.support_email}">{self.company.support_email}</a> &nbsp;|&nbsp;
+                  {self.company.phone}
+                </p>
+                <p><a href="http://{self.company.website}">{self.company.website}</a></p>
+                <p style="font-size:10px;color:#bbb;">
+                  This is an automated email. To unsubscribe, please contact our support.
+                </p>
+              </div>
+            </div>
+            </body>
 </html>"""
