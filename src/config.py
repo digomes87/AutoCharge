@@ -63,6 +63,55 @@ class AppConfig:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
 
+        if "company" not in data and "empresa" in data:
+            categories_raw = data.get("categorias", {})
+            category_key_map = {
+                "leve": "light",
+                "medio": "medium",
+                "critico": "critical",
+                "judicial": "judicial",
+            }
+            categories_normalized = {
+                category_key_map.get(k, k): v for k, v in categories_raw.items()
+            }
+
+            data = {
+                "company": {
+                    "name": data["empresa"]["nome"],
+                    "support_email": data["empresa"]["email_suporte"],
+                    "phone": data["empresa"]["telefone"],
+                    "website": data["empresa"]["site"],
+                },
+                "email": {
+                    "smtp_host": data["email"]["smtp_host"],
+                    "smtp_port": data["email"]["smtp_port"],
+                    "use_tls": data["email"]["usar_tls"],
+                    "sender_email": data["email"]["email_remetente"],
+                    "sender_name": data["email"]["nome_remetente"],
+                    "rate_limit_seconds": data["email"]["rate_limit_segundos"],
+                    "max_retries": data["email"]["max_tentativas"],
+                },
+                "data": {
+                    "clients_file": data["dados"]["arquivo_clientes"],
+                    "logs_dir": data["dados"]["diretorio_logs"],
+                    "reports_dir": data["dados"]["diretorio_relatorios"],
+                },
+                "categories": categories_normalized,
+                "schedule": {
+                    "execution_time": data["agendamento"]["horario_execucao"],
+                    "weekdays": data["agendamento"]["dias_semana"],
+                    "timezone": data["agendamento"]["timezone"],
+                },
+                "test_mode": data.get("modo_teste", True),
+                "test_email": data.get("email_teste", ""),
+            }
+
+        clients_file = data.get("data", {}).get("clients_file")
+        if isinstance(clients_file, str) and not Path(clients_file).exists():
+            fallback = Path("data/clients.csv")
+            if fallback.exists():
+                data["data"]["clients_file"] = str(fallback)
+
         return cls(
             company=CompanyConfig(
                 name=data["company"]["name"],

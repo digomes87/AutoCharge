@@ -6,8 +6,8 @@ from typing import Any, Dict, List, Optional, cast
 
 import pandas as pd
 
-from config import AppConfig
-from logger import LogManager
+from src.config import AppConfig
+from src.logger import LogManager
 
 logger = LogManager.get_logger("DataProcessor")
 
@@ -95,6 +95,7 @@ class DataProcessor:
         assert df is not None
 
         mapping = {
+            "id_cliente": "client_id",
             "id_cliene": "client_id",
             "nome": "name",
             "empresa": "company",
@@ -148,7 +149,7 @@ class DataProcessor:
         if not invalid_emails_df.empty:
             self.statistics.invalid_emails = invalid_emails_df["client_id"].tolist()
 
-        overdue_mask = df[df["days_overdue"] > 0]
+        overdue_mask = df["days_overdue"] > 0
         filtered_df = df.loc[overdue_mask].copy()
         self.df = cast(pd.DataFrame, filtered_df)
 
@@ -160,9 +161,9 @@ class DataProcessor:
         df = self.df
         assert df is not None
 
-        def categorize() -> str:
+        def categorize(days_overdue: int) -> str:
             for cat_name, cat_config in self.categories.items():
-                if cat_config.min_days <= cat_config.max_days:
+                if cat_config.min_days <= days_overdue <= cat_config.max_days:
                     return cat_name
 
             return "judicial"
