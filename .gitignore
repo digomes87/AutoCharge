@@ -75,6 +75,8 @@ share/python-wheels/
 *.egg
 MANIFEST
 .venv
+reports/
+logs/
 
 # Installer logs
 pip-log.txt
