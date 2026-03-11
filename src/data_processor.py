@@ -7,9 +7,9 @@ from typing import Any, Dict, List, Optional, cast
 import pandas as pd
 
 from config import AppConfig
-from logger import Logger
+from logger import LogManager
 
-logger = Logger.get_logger("DataProcessor")
+logger = LogManager.get_logger("DataProcessor")
 
 
 def _skip_if_df_none(method):

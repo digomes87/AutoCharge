@@ -3,20 +3,21 @@ from datetime import datetime
 from pathlib import Path
 
 
-class Logger:
-    """Manages applications logging config"""
+class LogManager:
+    """Manages application logging configuration."""
 
     @staticmethod
-    def setup_logger(log_dir: str = "logs") -> logging.Logger:
-        """Configure the application logger"""
+    def setup(log_dir: str = "logs") -> logging.Logger:
+        """Configures the application logger."""
         Path(log_dir).mkdir(parents=True, exist_ok=True)
 
-        timestamps = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = Path(log_dir) / f"billing_{timestamps}.log"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_file = Path(log_dir) / f"billing_{timestamp}.log"
 
         logger = logging.getLogger("BillingSystem")
         logger.setLevel(logging.INFO)
 
+        # Remove existing handlers to avoid duplicates
         if logger.handlers:
             logger.handlers.clear()
 
@@ -38,5 +39,13 @@ class Logger:
 
     @staticmethod
     def get_logger(name: str) -> logging.Logger:
-        """Returns a logger with the given name"""
+        """Returns a logger with the given name."""
         return logging.getLogger(f"BillingSystem.{name}")
+
+
+def setup_logger(log_dir: str = "logs") -> logging.Logger:
+    return LogManager.setup(log_dir)
+
+
+def get_logger(name: str) -> logging.Logger:
+    return LogManager.get_logger(name)

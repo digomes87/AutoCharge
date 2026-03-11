@@ -6,7 +6,7 @@ from .config import (
     EmailConfig,
     ScheduleConfig,
 )
-from .logger import Logger
+from .logger import LogManager
 
 __all__ = [
     "AppConfig",
@@ -15,5 +15,5 @@ __all__ = [
     "DataConfig",
     "EmailConfig",
     "ScheduleConfig",
-    "Logger",
+    "LogManager",
 ]
